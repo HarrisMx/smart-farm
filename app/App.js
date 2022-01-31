@@ -6,9 +6,11 @@ import { Home, Login, History, Profile } from './components/Screens/';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Store from './redux/userState/store';
+import configureStore from './redux/userState/store';
 
 const Tab = createMaterialBottomTabNavigator();
+
+const Store = configureStore();
 
 const App = () => {
   /* return (

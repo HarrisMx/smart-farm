@@ -10,7 +10,7 @@ const userLogedInReducer = (state = initialState, action) => {
             ...state,
             userLogedIn: action.userLogedIn
         }
-        default: 
+        default:
             return state;
     }
 }
