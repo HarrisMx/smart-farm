@@ -13,8 +13,8 @@ const Tab = createMaterialBottomTabNavigator();
 const Store = configureStore();
 
 const App = () => {
-  /* return (
-    
+  return (
+    <Provider store={Store}>
     <NavigationContainer>
       <StatusBar barStyle="light-content" animated={true} backgroundColor={AppStrings.color.primary}/>
       <Tab.Navigator initialRouteName="Home" activeColor="#fff" inactiveColor="#999" barStyle={{ backgroundColor: AppStrings.color.primary }}>
@@ -30,23 +30,24 @@ const App = () => {
           <MaterialCommunityIcons name="history" color={color} size={26} />
         )
       }} />
-      <Tab.Screen name="Profile" component={Profile} options={{
+      {/* <Tab.Screen name="Profile" component={Profile} options={{
         tabBarColor: '#ccc',
         tabBarIcon: ({ color }) => (
           <MaterialCommunityIcons name="account-circle" color={color} size={26} />
         )
-      }}/>
+      }}/> */}
     </Tab.Navigator>
     </NavigationContainer>
-  ); */
+    </Provider>
+  );
 
-  return (
+  /* return (
     <Provider store={Store}>
       <View>
         <Login/>
       </View>
     </Provider>
-  )
+  ) */
 }
 
 export default App;

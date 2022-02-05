@@ -7,7 +7,8 @@ const AppStrings = {
         "primary": "#01877C",
         "white": "#fff",
         "titleBar": "#fff",
-        "googleButton": "#4285F4"
+        "googleButton": "#4285F4",
+        "orange":'#E6BB05'
     }
 }
 

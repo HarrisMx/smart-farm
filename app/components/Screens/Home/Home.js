@@ -10,8 +10,8 @@ import TempRead from '../../AppComponents/TemperatureRead/';
 const Home = () => {
     const [visible, setVisible] = React.useState(false);
     return(
-        <View style={{flex: 1}}>
-            
+        <View style={{flex: 1, padding: 15}}>
+            <TempRead />
             <CamModal visible={visible}>
                 <View style={{alignItems: 'center'}}>
                     <View style={AppStyles.modalHeader}>
@@ -19,7 +19,7 @@ const Home = () => {
                         <View style={AppStyles.modalHeaderIcon}><MaterialCommunityIcons name="camera" color={AppStrings.color.primary} size={30} /></View>
                     </View>
                     <View style={AppStyles.camContainer}>
-                        <WebView style={{width: 300}} source={{uri:'https://www.youtube.com/'}} />
+                        <WebView style={{width: 300}} source={{uri:'https://172d-41-117-132-177.ngrok.io/smartdrone/index.html'}} />
                     </View>
                     <View style={AppStyles.camClose}>
                         {/* <AppButton buttonText="Close"/> */}
@@ -31,7 +31,6 @@ const Home = () => {
             {/* <TouchableOpacity onPress={()=>setVisible(true)}>
                 <MaterialCommunityIcons name="camera" color={AppStrings.color.primary} size={30} />
             </TouchableOpacity> */}
-            <TempRead/>
             <FAB openCamera={()=>setVisible(true)}/>
         </View>
     )

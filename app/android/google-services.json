@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "146355613359",
+    "project_id": "smartdrone-c4456",
+    "storage_bucket": "smartdrone-c4456.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146355613359:android:83c2733c9fc8f6488a2e5a",
+        "android_client_info": {
+          "package_name": "com.devstack.smartdrone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "146355613359-ul662rsllkqgg5eph25jhjqh3kg94qvp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx7gKh4GEhQOrClX0GuC2RImC4-wW964c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "146355613359-ul662rsllkqgg5eph25jhjqh3kg94qvp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
