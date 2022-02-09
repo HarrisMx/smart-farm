@@ -11,18 +11,17 @@ export default function TemperatureRead() {
                     <Text style={[styles.tempReadText, {paddingBottom: 10} ]}>23 &deg;C </Text>
                     <Text style={styles.dateTime}>16:30 Friday, June 22</Text>
                 </View>
-                <View style={{flex: 1, alignItems: 'flex-end', paddingRight: 20, paddingTop: 10, alignContent: 'center'}}>
+                <View style={{flex: 1, alignItems: 'flex-end', paddingRight: 20, paddingTop: 10, alignContent: 'flex-end'}}>
                     <Text style={styles.locationText}>Pretoria</Text> 
-                    
                 </View>
             </View>
             <View style={styles.tempVals}>
                 <View style={{flex: 1, alignItems: 'center', flexDirection: 'row'}}>
-                    <Text>Low</Text>
+                <Text style={{color: AppStrings.color.white}}>10 &deg;C</Text>
                     <MaterialCommunityIcons name="thermometer-low" color={AppStrings.color.white} size={30} />
                 </View>
                 <View style={{flex: 1, alignItems: 'center', flexDirection: 'row'}}>
-                    <Text>High</Text>
+                    <Text style={{color: AppStrings.color.white}}>30 &deg;C</Text>
                     <MaterialCommunityIcons name="thermometer-high" color={AppStrings.color.white} size={30} />
                 </View>
             </View>
@@ -45,6 +44,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 7,
         top: 5,
+        color: AppStrings.color.white,
         height: 50,
         marginBottom: 5
     },

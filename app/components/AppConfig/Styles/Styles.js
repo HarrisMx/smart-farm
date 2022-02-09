@@ -69,8 +69,17 @@ const AppStyles = StyleSheet.create({
         paddingTop: 5,
         width: '50%',
     },
+    tipModalHeaderText: {
+        alignItems: 'flex-end',
+        paddingTop: 5,
+        width: '50%',
+    },
     modalHeaderIcon: {
         alignItems: 'flex-end',
+        width: '50%',
+    },
+    tipModalHeaderIcon: {
+        alignItems: 'flex-start',
         width: '50%',
     },
     camClose: {
@@ -79,6 +88,10 @@ const AppStyles = StyleSheet.create({
     modalClose: {
         backgroundColor: AppStrings.color.primary,
         borderRadius: 10,
+    },
+    modalBody: {
+        flex: 1,
+        
     }
 });
 

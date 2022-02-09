@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Modal, StyleSheet, Animated } from 'react-native'
 
-const CamModal = ({visible, children}) => {
+const TipModal = ({visible, children}) => {
     const [showModal, setShowModal] = React.useState(visible);
     const scaleValue = React.useRef(new Animated.Value(0)).current; 
     React.useEffect(()=>{
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CamModal;
+export default TipModal;

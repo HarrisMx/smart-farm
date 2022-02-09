@@ -4,9 +4,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { AppStrings } from '../../AppConfig/index';
 
 export default function FAB(props) {
-    const clickHandler = () => {
-        alert('Floating Button Clicked');
-      };
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.container}>
@@ -15,7 +12,7 @@ export default function FAB(props) {
             activeOpacity={0.7}
             onPress={props.openCamera}
             style={styles.touchableOpacityStyle}>
-            <MaterialCommunityIcons name="camera" color={AppStrings.color.white} size={30} />
+            <MaterialCommunityIcons name="video" color={AppStrings.color.white} size={30} />
             </TouchableOpacity>
         </View>
     </SafeAreaView>
@@ -25,8 +22,8 @@ export default function FAB(props) {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        bottom: 20,
-        right: 10,
+        bottom: 8,
+        right: 8,
         backgroundColor: '#E6BB05',
         borderRadius: 50,
     },
