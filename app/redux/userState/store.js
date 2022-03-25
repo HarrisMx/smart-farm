@@ -1,12 +1,11 @@
-import { createStore, combineReducers } from 'redux';
-import userLogedInReducer from './userStateReducer';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import appReducer from './userStateReducer';
+import thunk from 'redux-thunk';
 
-const rootReducer = combineReducers(
-    { user: userLogedInReducer }
-);
+const rootReducer = combineReducers({appReducer});
 
 const configureStore = () => {
-    return createStore(rootReducer);
+    return createStore(rootReducer, applyMiddleware(thunk));
 }
   
 export default configureStore

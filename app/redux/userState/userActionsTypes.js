@@ -1,1 +1,2 @@
 export const USER_LOGED_IN = "USER_LOGED_IN";
+export const UPDATE_FARMING_TIPS = "UPDATE_FARMING_TIPS";
