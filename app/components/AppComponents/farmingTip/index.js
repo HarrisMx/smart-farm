@@ -5,13 +5,16 @@ import AppButton from '../AppButton/';
 import { Card } from 'react-native-material-ui';
 
 const Tip = (props) => {
+    let image = require(props.imagePath);
+
   return <View style={styles.container}>
       <View style={styles.image}>
-          <Image source={require('../../assets/farmbg.jpg')} style={{ flex: 1, resizeMode: 'cover', width: '100%', borderTopLeftRadius: 8, borderTopRightRadius:8}} />
+          {console.log('From tip component', props.imagePath)}
+          <Image source={image} style={{ flex: 1, resizeMode: 'cover', width: '100%', borderTopLeftRadius: 8, borderTopRightRadius:8}} />
       </View>
       <View style={styles.cta}>
           <View style={{flex: 1}}>
-            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18, fontFamily: 'roboto'}}>Growing spinnach</Text>
+            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18, fontFamily: 'roboto'}}>{props.title}</Text>
           </View>
           <View style={{flex: 1}}>
           <TouchableOpacity  style={styles.ctaButton} onPress={props.openTipModal}>

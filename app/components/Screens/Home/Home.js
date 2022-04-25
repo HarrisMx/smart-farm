@@ -11,6 +11,7 @@ import Tip from '../../AppComponents/farmingTip/';
 import TipContent from '../../AppComponents/TipContent/';
 import { setUserLoggedIn, updateFarmingTips} from '../../../redux/userState/userActions';
 import { useSelector, useDispatch } from 'react-redux';
+import farming_tips from "../../../data/farming_tips";
 
 import axios from 'axios';
 
@@ -77,9 +78,9 @@ const Home = () => {
 
     React.useEffect(() => {
         ToastAndroid.show("Rendered", ToastAndroid.SHORT, ToastAndroid.BOTTOM, 25, 50);
-        dispatch(setUserLoggedIn(true))
-        dispatch(updateFarmingTips([{"title": "Growing peanuts", "description": "I am growing my peanuts", "img": "https:google"}]))
-        console.log(userLogedIn, farmingTips);
+        dispatch(setUserLoggedIn(true));
+        dispatch(updateFarmingTips([{"title": "Growing peanuts", "description": "I am growing my peanuts", "img": "https:google"}]));
+        //console.log(userLogedIn, farmingTips, farming_tips, typeof(farming_tips));
     }, []);
 
     return(
@@ -89,9 +90,14 @@ const Home = () => {
             
             <View style={{width: '100%', height: '67%', justifyContent: 'center', alignItems: 'center'}}>
                 <ScrollView scrollEventThrottle={16} showsHorizontalScrollIndicator={false} horizontal={true}>
-                    <Tip openTipModal={() => setIsTipVisible(true)} />
-                    <Tip openTipModal={() => setIsTipVisible(true)} />
-                    <Tip openTipModal={() => setIsTipVisible(true)} />
+                   {
+                      farming_tips['tips'].map((tip)=>(
+                        <Tip openTipModal={() => setIsTipVisible(true)} id={tip.ïd} key={tip.ïd} title={tip.title} description={tip.description} imagePath={tip.img_path} />
+                      ))
+                   }
+                    {/* <Tip openTipModal={() => setIsTipVisible(true)} id="" title="" description="" imagePath="" />
+                    <Tip openTipModal={() => setIsTipVisible(true)} id="" title="" description="" imagePath="" />
+                    <Tip openTipModal={() => setIsTipVisible(true)} id="" title="" description="" imagePath="" /> */}
                 </ScrollView>
             </View>
             
