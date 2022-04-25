@@ -76,6 +76,7 @@ const Home = () => {
     const {userLogedIn, farmingTips}  = useSelector(state => state.appReducer);
     const dispatch = useDispatch();
 
+
     React.useEffect(() => {
         ToastAndroid.show("Rendered", ToastAndroid.SHORT, ToastAndroid.BOTTOM, 25, 50);
         dispatch(setUserLoggedIn(true));
@@ -95,9 +96,6 @@ const Home = () => {
                         <Tip openTipModal={() => setIsTipVisible(true)} id={tip.ïd} key={tip.ïd} title={tip.title} description={tip.description} imagePath={tip.img_path} />
                       ))
                    }
-                    {/* <Tip openTipModal={() => setIsTipVisible(true)} id="" title="" description="" imagePath="" />
-                    <Tip openTipModal={() => setIsTipVisible(true)} id="" title="" description="" imagePath="" />
-                    <Tip openTipModal={() => setIsTipVisible(true)} id="" title="" description="" imagePath="" /> */}
                 </ScrollView>
             </View>
             
