@@ -1,27 +1,31 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text,Image, StyleSheet} from 'react-native';
 import { AppStrings } from '../../AppConfig/index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useSelector } from 'react-redux';
 
 export default function TemperatureRead() {
+    const {temperature, date}  = useSelector(state => state.appReducer);
+    console.log(temperature.icon);
     return (
         <View style={styles.container}>
            <View style={styles.tempInfo}>
                 <View style={{flex: 1,flexDirection: 'column', alignItems: 'center', paddingTop: 10,height:70}}>
-                    <Text style={[styles.tempReadText, {paddingBottom: 10} ]}>23 &deg;C </Text>
-                    <Text style={styles.dateTime}>16:30 Friday, June 22</Text>
+                    <Text style={[styles.tempReadText, {paddingBottom: 10} ]}>{temperature.curr_temp} &deg;C </Text>
+                    <Text style={styles.dateTime}>{date}</Text>
                 </View>
                 <View style={{flex: 1, alignItems: 'flex-end', paddingRight: 20, paddingTop: 10, alignContent: 'flex-end'}}>
-                    <Text style={styles.locationText}>Pretoria</Text> 
+                    <Text style={styles.locationText}>{temperature.name}</Text> 
+                    <Image source={{uri:temperature.icon}} style={{width: 70, height:70}} />
                 </View>
             </View>
             <View style={styles.tempVals}>
                 <View style={{flex: 1, alignItems: 'center', flexDirection: 'row'}}>
-                <Text style={{color: AppStrings.color.white}}>10 &deg;C</Text>
+                <Text style={{color: AppStrings.color.white}}>{temperature.temp_min} &deg;C</Text>
                     <MaterialCommunityIcons name="thermometer-low" color={AppStrings.color.white} size={30} />
                 </View>
                 <View style={{flex: 1, alignItems: 'center', flexDirection: 'row'}}>
-                    <Text style={{color: AppStrings.color.white}}>30 &deg;C</Text>
+                    <Text style={{color: AppStrings.color.white}}>{temperature.temp_max} &deg;C</Text>
                     <MaterialCommunityIcons name="thermometer-high" color={AppStrings.color.white} size={30} />
                 </View>
             </View>

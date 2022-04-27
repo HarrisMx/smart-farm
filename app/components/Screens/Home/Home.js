@@ -9,79 +9,164 @@ import FAB from '../../AppComponents/FAB/';
 import TempRead from '../../AppComponents/TemperatureRead/';
 import Tip from '../../AppComponents/farmingTip/';
 import TipContent from '../../AppComponents/TipContent/';
-import { setUserLoggedIn, updateFarmingTips} from '../../../redux/userState/userActions';
+import { updateTemperature, updateDate} from '../../../redux/userState/userActions';
 import { useSelector, useDispatch } from 'react-redux';
 import farming_tips from "../../../data/farming_tips";
-
-import axios from 'axios';
-
-const getWeather = () =>{
-    const baseUrl = `https://api.openweathermap.org/data/2.5/weather?`;
-    let lat = `53.2734`;
-    let long = `-7.77832031`;
-    let appid = `151c7bdfb19896f4b53b46c3fcff2b06`;
-
-    axios({
-        method: 'POST',
-        url: `${baseUrl}lat=${lat}&lon=${long}&appid=${appid}`
-    }).then((response) =>{
-        ToastAndroid.show(response, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
-    }).catch((err) =>{
-        ToastAndroid.show(err, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
-    })
-}
  
-const getCurrentDate = () =>{
-
-    let date = new Date().getDate();
-    let month = new Date().getMonth() + 1;
-    let year = new Date().getFullYear();
-    let day = new Date().getDay();
-
-    let _day = "";
-
-    switch(day) {
-        case 1:
-            _day = "Sunday"
-            break;
-        case 2:
-            _day = "Monday"
-            break;
-        case 3:
-            _day = "Tuesday"
-            break;
-        case 4:
-            _day = "Wednesday"
-            break;
-        case 5:
-            _day = "Thursday"
-            break;
-        case 6:
-            _day = "Friday"
-            break;
-        case 7:
-            _day = "Saturday"
-            break;
-        default:
-            return;
-    }
-
-    return [_day, ]
-}
 
 const Home = () => {
     const [visible, setVisible] = React.useState(false);
     const [isTipVisible, setIsTipVisible] = React.useState(false);
 
-    const {userLogedIn, farmingTips}  = useSelector(state => state.appReducer);
+    const {userLogedIn, farmingTips, activeFarmingTips}  = useSelector(state => state.appReducer);
     const dispatch = useDispatch();
 
+    const getCurrentDate = () =>{
+
+        let date = new Date().getDate();
+        let month = new Date().getMonth() + 1;
+        let year = new Date().getFullYear();
+        let day = new Date().getDay();
+        let _month = "";
+
+        switch(month) {
+            case 1:
+                _month = "Jan"
+                break;
+            case 2:
+                _month = "Feb"
+                break;
+            case 3:
+                _month = "Mar"
+                break;
+            case 4:
+                _month = "Apr"
+                break;
+            case 5:
+                _month = "May"
+                break;
+            case 6:
+                _month = "Jun"
+                break;
+            case 7:
+                _month = "Jul"
+                break;
+            case 8:
+                _month = "Aug"
+                break;
+            case 9:
+                _month = "Sept"
+                break;
+            case 10:
+                _month = "Oct"
+                break;
+            case 11:
+                _month = "Nov"
+                break;
+            case 12:
+                _month = "Dec"
+                break;
+            default:
+                return;
+        }
+    
+        let _day = "";
+    
+        switch(day) {
+            case 7:
+                _day = "Sunday"
+                break;
+            case 1:
+                _day = "Monday"
+                break;
+            case 2:
+                _day = "Tuesday"
+                break;
+            case 3:
+                _day = "Wednesday"
+                break;
+            case 4:
+                _day = "Thursday"
+                break;
+            case 5:
+                _day = "Friday"
+                break;
+            case 6:
+                _day = "Saturday"
+                break;
+            default:
+                return;
+        }
+    
+        let today = new Date();
+        let time = today.getHours() + ":" + today.getMinutes();
+        
+        let _date =  `${time} ${_day}, ${_month} ${year}`;
+
+        dispatch(updateDate(_date));
+    }
+
+    const getWeather = () =>{
+        try {
+            const baseUrl = `https://api.openweathermap.org/data/2.5/weather?`;
+            let lat = `-26.041788`;
+            let long = `27.956558`;
+            let appid = `151c7bdfb19896f4b53b46c3fcff2b06`;
+    
+            let _url = `${baseUrl}lat=${lat}&lon=${long}&appid=${appid}`;
+            
+            let temp = new Object();
+            
+            fetch(_url, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => response.json()).then((response) =>{
+                let temp_min = response.main.temp_min;
+                let temp_max = response.main.temp_max;
+                let icon = `http://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`;
+                let curr_temp = response.main.feels_like;
+                let name = response.name;
+                temp = {
+                    temp_min: Math.round((temp_min-  273.15)),
+                    temp_max: Math.round((temp_max-  273.15)),
+                    icon: icon,
+                    curr_temp: Math.round((curr_temp-  273.15)),
+                    name: name
+                }
+                dispatch(updateTemperature(temp));
+                //ToastAndroid.show(response, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+            }).catch((err) =>{
+                console.log(err);
+            //ToastAndroid.show(err, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+            });
+        } catch (error) {
+            ToastAndroid.show(error, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+        }
+    }
+
+    const getStreamURI = () => {
+        fetch("", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => response.json()).then((response) =>{
+            console.log(response);
+            let uri = null;
+            dispatch(updateStreamingUri(uri));
+            //ToastAndroid.show(response, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+        }).catch((err) =>{
+            ToastAndroid.show(err, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+        });
+    }
 
     React.useEffect(() => {
-        ToastAndroid.show("Rendered", ToastAndroid.SHORT, ToastAndroid.BOTTOM, 25, 50);
-        dispatch(setUserLoggedIn(true));
-        dispatch(updateFarmingTips([{"title": "Growing peanuts", "description": "I am growing my peanuts", "img": "https:google"}]));
-        //console.log(userLogedIn, farmingTips, farming_tips, typeof(farming_tips));
+        getWeather();
+        getCurrentDate();
     }, []);
 
     return(
@@ -93,7 +178,7 @@ const Home = () => {
                 <ScrollView scrollEventThrottle={16} showsHorizontalScrollIndicator={false} horizontal={true}>
                    {
                       farming_tips['tips'].map((tip)=>(
-                        <Tip openTipModal={() => setIsTipVisible(true)} id={tip.ïd} key={tip.ïd} title={tip.title} description={tip.description} imagePath={tip.img_path} />
+                        <Tip openTipModal={() => setIsTipVisible(true)} id={tip.id} key={tip.id} title={tip.title} description={tip.description} imagePath={tip.img_path} />
                       ))
                    }
                 </ScrollView>

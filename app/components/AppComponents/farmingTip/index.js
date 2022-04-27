@@ -3,11 +3,16 @@ import {Text, View, Image, StyleSheet, TouchableOpacity, Alert } from 'react-nat
 import { AppStrings } from '../../AppConfig/index';
 import AppButton from '../AppButton/';
 import { Card } from 'react-native-material-ui';
+import { useDispatch } from 'react-redux';
+import { updateActiveFarmingTips } from '../../../redux/userState/userActions';
 
 const Tip = (props) => {
+    const dispatch = useDispatch();
 
-//let  image = Image.resolveAssetSource(require(props.imagePath));
-   
+    const doActions = () =>{
+        props.openTipModal()
+        dispatch(updateActiveFarmingTips(props.id));
+    }
 
   return <View style={styles.container}>
       <View style={styles.image}>
@@ -18,9 +23,9 @@ const Tip = (props) => {
             <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18, fontFamily: 'roboto'}}>{props.title}</Text>
           </View>
           <View style={{flex: 1}}>
-          <TouchableOpacity  style={styles.ctaButton} onPress={props.openTipModal}>
+          <TouchableOpacity  style={styles.ctaButton} onPress={doActions}>
             <Text style={{color: 'white', textTransform: 'uppercase'}}>Read More</Text>
-        </TouchableOpacity>
+            </TouchableOpacity>
           </View>
       </View>
   </View>;
