@@ -42,7 +42,6 @@ return (
         </ImageBackground>
       </View>
   );
-  
 }
 
 export default Login;

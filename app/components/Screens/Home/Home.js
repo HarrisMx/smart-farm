@@ -9,7 +9,7 @@ import FAB from '../../AppComponents/FAB/';
 import TempRead from '../../AppComponents/TemperatureRead/';
 import Tip from '../../AppComponents/farmingTip/';
 import TipContent from '../../AppComponents/TipContent/';
-import { updateTemperature, updateDate} from '../../../redux/userState/userActions';
+import { updateTemperature, updateDate, updateStreamingUri} from '../../../redux/userState/userActions';
 import { useSelector, useDispatch } from 'react-redux';
 import farming_tips from "../../../data/farming_tips";
  
@@ -17,8 +17,10 @@ import farming_tips from "../../../data/farming_tips";
 const Home = () => {
     const [visible, setVisible] = React.useState(false);
     const [isTipVisible, setIsTipVisible] = React.useState(false);
+    const [streamingUri, setStreamingUri] = React.useState("https://b74c-41-119-139-136.ngrok.io/");
 
     const {userLogedIn, farmingTips, activeFarmingTips}  = useSelector(state => state.appReducer);
+    
     const dispatch = useDispatch();
 
     const getCurrentDate = () =>{
@@ -74,25 +76,25 @@ const Home = () => {
     
         switch(day) {
             case 7:
-                _day = "Sunday"
+                _day = "Sun"
                 break;
             case 1:
-                _day = "Monday"
+                _day = "Mon"
                 break;
             case 2:
-                _day = "Tuesday"
+                _day = "Tue"
                 break;
             case 3:
-                _day = "Wednesday"
+                _day = "Wed"
                 break;
             case 4:
-                _day = "Thursday"
+                _day = "Thur"
                 break;
             case 5:
-                _day = "Friday"
+                _day = "Fri"
                 break;
             case 6:
-                _day = "Saturday"
+                _day = "Sat"
                 break;
             default:
                 return;
@@ -148,17 +150,21 @@ const Home = () => {
     }
 
     const getStreamURI = () => {
-        fetch("", {
+        fetch("http://178.62.244.94:5001/api/streamUri", {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             }
         }).then((response) => response.json()).then((response) =>{
-            console.log(response);
-            let uri = null;
-            dispatch(updateStreamingUri(uri));
-            //ToastAndroid.show(response, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+            if(response.Success){
+                console.log(response);
+                let uri = response.data.url;
+                dispatch(updateStreamingUri(uri));
+                setStreamingUri(response.data.url)
+            }else{
+                ToastAndroid.show("Failed to get streaming URI, setting a default URI", ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
+            }
         }).catch((err) =>{
             ToastAndroid.show(err, ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
         });
@@ -167,12 +173,15 @@ const Home = () => {
     React.useEffect(() => {
         getWeather();
         getCurrentDate();
+        //getStreamURI();
     }, []);
 
     return(
         <View style={{flex: 1, padding: 15}}>
             <TempRead />
-            <View style={{paddingTop: 8, paddingBottom:0}}><Text style={{fontWeight: 'bold'}}>Farming tips:</Text></View>
+            <View style={{paddingTop: 8, paddingBottom:0}}>
+                <Text style={{fontWeight: 'bold'}}>Farming tips:</Text>
+            </View>
             
             <View style={{width: '100%', height: '67%', justifyContent: 'center', alignItems: 'center'}}>
                 <ScrollView scrollEventThrottle={16} showsHorizontalScrollIndicator={false} horizontal={true}>
@@ -191,7 +200,7 @@ const Home = () => {
                         <View style={AppStyles.modalHeaderIcon}><MaterialCommunityIcons name="video" color={AppStrings.color.primary} size={30} /></View>
                     </View>
                     <View style={AppStyles.camContainer}>
-                        <WebView style={{width: 300}} source={{uri:'http://1dcb-41-112-166-104.ngrok.io'}} />
+                        <WebView style={{width: 300}} source={{uri:streamingUri}} />
                     </View>
                     <View style={AppStyles.camClose}>
 
