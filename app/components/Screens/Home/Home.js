@@ -9,10 +9,32 @@ import FAB from '../../AppComponents/FAB/';
 import TempRead from '../../AppComponents/TemperatureRead/';
 import Tip from '../../AppComponents/farmingTip/';
 import TipContent from '../../AppComponents/TipContent/';
+import fetch from 'node-fetch';
 
 const Home = () => {
     const [visible, setVisible] = React.useState(false);
     const [isTipVisible, setIsTipVisible] = React.useState(false);
+    const [streamUri, setStreamUri] = React.useState('http://1dcb-41-112-166-104.ngrok.io');
+
+    const getUrl = async () => {
+        let url = 'http://178.62.244.94:5001/api/streamUri';
+        const response = await fetch(url,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            ToastAndroid.show("Couldn't fetch stream URI", ToastAndroid.lONG, ToastAndroid.BOTTOM, 25, 50);
+        }
+        console.log(response.data.url);
+        setStreamUri(response.data.url);
+    }
+
+    useEffect(()=>{
+        getUrl();
+    }, [])
 
     return(
         <View style={{flex: 1, padding: 15}}>
@@ -34,7 +56,7 @@ const Home = () => {
                         <View style={AppStyles.modalHeaderIcon}><MaterialCommunityIcons name="video" color={AppStrings.color.primary} size={30} /></View>
                     </View>
                     <View style={AppStyles.camContainer}>
-                        <WebView style={{width: 300}} source={{uri:'http://1dcb-41-112-166-104.ngrok.io'}} />
+                        <WebView style={{width: 300}} source={{uri:{streamUri}}} />
                     </View>
                     <View style={AppStyles.camClose}>
 
